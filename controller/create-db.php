@@ -35,3 +35,4 @@
     }
     
     $connection->close();
+/*closes users connection*/
