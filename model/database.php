@@ -15,7 +15,7 @@ class Database {
         $this->username = $username;
         $this->password = $password;
         $this->database = $database;
-
+        
         $this->connection = new mysqli($host, $username, $password);
 
         if ($this->connection->connect_error) {
@@ -23,7 +23,7 @@ class Database {
         }
 
         $exists = $this->connection->select_db($database);
-
+        
         if (!$exists) {
             $query = $this->connection->query("CREATE DATABASE $database");
 
@@ -62,5 +62,5 @@ class Database {
 
         return $query;
     }
-
+/*creates a public function that can be used outside of database.php*/
 }

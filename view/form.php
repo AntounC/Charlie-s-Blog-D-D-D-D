@@ -1,7 +1,7 @@
 <?php
 require_once (__DIR__ . "/../model/config.php");
 require_once (__DIR__ . "/../controller/login-verify.php");
-
+/*links config.php and login-verify to form.php*/
 if (!authenticateUser()) {
     header("Location: " . $path . "index.php");
     die();

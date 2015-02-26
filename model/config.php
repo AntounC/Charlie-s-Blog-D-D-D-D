@@ -4,7 +4,7 @@
     session_regenerate_id(true);
     
     $path = "/charliea-blog/";
-    
+    /*sets the path to charliea-blog*/
     $host = "localhost";
     $username = "root";
     $password = "root";

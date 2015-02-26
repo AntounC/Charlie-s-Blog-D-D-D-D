@@ -12,6 +12,7 @@
     }
     else {
         echo "<p>" . $_SESSION["connection"]->error . "</p>";
+        /*States that the session connection has turned to an error*/
     }
     
     $query = $_SESSION["connection"]->query("CREATE TABLE users ("
@@ -24,9 +25,8 @@
     
     if($query) {
         echo "<p>Successfully created table: users</p>";
-    }
+    }  /*informs the user that the user table has been created*/
     else {
         echo "<p>" . $_SESSION["connection"]->error . "</p>";
     }
-    
-  /*querys username and password information*/
+ /*querys username and password information*/
