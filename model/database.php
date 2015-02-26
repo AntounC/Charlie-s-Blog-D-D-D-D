@@ -1,21 +1,40 @@
 <?php
+
+class Database {
 /*declares variables for connection, host, username, password, and database which are all privatex*/
 /*private makes the variable only usable in this specific file*/
-class Database {
     private $connection;
     private $host;
     private $username;
     private $password;
     private $database;
-    
+    public $error;
+
     public function __construct($host, $username, $password, $database) {
         $this->host = $host;
         $this->username = $username;
         $this->password = $password;
         $this->database = $database;
+
+        $this->connection = new mysqli($host, $username, $password);
+
+        if ($this->connection->connect_error) {
+            die("<p>Error: " . $this->connection->connect_error . "</p>");
+        }
+
+        $exists = $this->connection->select_db($database);
+
+        if (!$exists) {
+            $query = $this->connection->query("CREATE DATABASE $database");
+
+            if ($query) {
+                echo "<p>Successsfully created database: " . $database . "</p>";
+            }
+        } else {
+            echo "<p>Database has already exists.</p>";
+        }
     }
-    /*uses the global variables listed^*/
-    
+
     public function openConnection() {
         $this->connection = new mysqli($this->host, $this->username, $this->password, $this->database);
 
@@ -23,27 +42,25 @@ class Database {
             die("<p>Error: " . $this->connection->connect_error . "</p>");
         }
     }
-    /*checks if there is a connection and returns true or false*/
-    /*if statement checks whether or not the connection has been opened*/
-    /*isset checks whether the variable has been set or not checks for information in variablle*/
-    public function closeConnection() {
-        if(isset($this->connection)) {     
-            $this->connection->close();
-        
-         }
-        
-    }
-    
-    public function query($string) {
-      $this->openConnection();  
-      
-      $query = $this->connection->query($string); /*the -> notation specifies an execution of an action between to actions*/
-      
-      $this->closeConnection();
-      /*in this function, the connection is opened, queryed, closed, and returned*/
-      
-      return $query; 
-    }
-    
-}
 
+    public function closeConnection() {
+        if (isset($this->connecion)) {
+            $this->connection->close();
+        }
+    }
+
+    public function query($string) {
+        $this->openConnection();
+
+        $query = $this->connection->query($string);
+        
+        if(!$query) {
+            $this->error = $this->connection->error;
+        }
+
+        $this->closeConnection();
+
+        return $query;
+    }
+
+}

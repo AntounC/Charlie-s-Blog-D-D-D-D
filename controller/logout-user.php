@@ -6,11 +6,8 @@
         header("location: " . $path . "index.php");
         die();
     }
-?>
-<nav>
-    <ul>
-        <li>
-            <a href="<?php echo $path . "post.php"?>">Blog Post Form</a> <br />
-        </li>
-    </ul>
-</nav>
+    
+    unset($_SESSION["authenticated"]);
+    
+    session_destroy();
+    header("location: " . $path . "index.php");
